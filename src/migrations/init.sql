@@ -1,3 +1,3 @@
-CREATE DATABASE mockdatabase;
-CREATE USER mockdatabase WITH PASSWORD 'mockdatabase';
-GRANT ALL PRIVILEGES ON DATABASE mockdatabase TO mockdatabase;
+CREATE DATABASE twitter;
+CREATE USER twitter WITH PASSWORD 'twitter';
+GRANT ALL PRIVILEGES ON DATABASE twitter TO twitter;
