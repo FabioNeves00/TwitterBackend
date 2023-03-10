@@ -1,6 +1,7 @@
 import { Post } from 'src/modules/posts/entities/post.entity';
-import { Column, CreateDateColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;

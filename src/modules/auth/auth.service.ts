@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import type { SessionPayload } from 'src/@types/session';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-// import { TokenException } from 'src/common/exceptions/invalid-token';
+import { TokenException } from 'src/common/exceptions/invalid-token';
 import { configurationService } from 'src/config/config.service';
 import { Repository } from 'typeorm';
-import { SessionPayload } from 'src/@types/session';
 import { User } from '../users/entities/user.entity';
 import { CreateSessionDto } from './dto/create-session.dto';
+import { hash, verify } from 'argon2';
+import { SignUpDto } from './dto/sign-up.dto';
+import { InvalidCredentialsException } from 'src/common/exceptions/invalid-credentials';
 
 @Injectable()
 export class AuthService {
@@ -17,36 +20,41 @@ export class AuthService {
   ) {}
 
   async signin(sessionDto: CreateSessionDto) {
-    let user = await this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { email: sessionDto.email },
     });
 
-    if (!user) {
-      //throw does not exist error  NOT FOUND
-    }
+    if (!user) throw new TokenException()
+
+    if(!verify(user.password, sessionDto.password)) throw new InvalidCredentialsException()
+
+    return this.generateSession({ email: user.email, sub: user.id, username: user.username })
   }
 
-  async signup(sessionDto: CreateSessionDto) {
-    let user = await this.userRepository.findOne({
-      where: { email: sessionDto.email },
+  async signup(signUpDto: SignUpDto) {
+    const user = await this.userRepository.findOne({
+      where: { email: signUpDto.email },
     });
-
-    if (!user) {
-      //throw does not exist error  NOT FOUND
-    }
+    
+    if (user) throw new UnauthorizedException()
+  
+    const newUser = this.userRepository.create(signUpDto)
+    newUser.password = await hash(newUser.password)
+    console.log(newUser);
+    await this.userRepository.save(newUser)
+    return this.generateSession({ email: newUser.email, sub: newUser.id, username: newUser.username })
   }
 
-  async generateSession(sessionDto: CreateSessionDto) {
+  async generateSession(session: SessionPayload) {
+    const token = await this.jwtService.signAsync(
+      session,
+      {
+        secret: configurationService.getValue('JWT_SECRET'),
+        expiresIn: configurationService.getValue('JWT_EXPIRE'),
+      },
+    );
 
-    // const token = await this.jwtService.signAsync(
-    //   { ...sessionDto, sub: user.id },
-    //   {
-    //     secret: configurationService.getValue('JWT_SECRET'),
-    //     expiresIn: configurationService.getValue('JWT_EXPIRE'),
-    //   },
-    // );
-
-    // return token;
+    return token;
   }
 
   async verifySession(session: string) {
