@@ -1,15 +1,9 @@
 import {
   Body,
-  Controller,
-  Get,
-  ParseUUIDPipe,
-  Post,
-  Put,
-  Query,
-  Res,
-  UseGuards,
+  Controller, Post,
+  Put, Res
 } from '@nestjs/common';
-import { ApiCookieAuth, ApiExtraModels, ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { Public } from 'src/common/decorators/metadata/public.metadata';
 import { AuthService } from './auth.service';
