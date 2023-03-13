@@ -1,16 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepo: Repository<User>,
+  ) {}
+
   findAll() {
-    return `This action returns all users`;
+    return this.userRepo.find({
+      relations: ['posts'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  findOne(id: string) {
+    return this.userRepo.find({
+      where: {
+        id,
+      },
+      relations: ['posts'],
+    });
   }
 }
