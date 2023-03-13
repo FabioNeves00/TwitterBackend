@@ -10,6 +10,7 @@ export class PostsService {
     @InjectRepository(Post)
     private readonly postRepo: Repository<Post>,
   ) {}
+
   async create(createPostDto: CreatePostDto) {
     const newPost = this.postRepo.create(createPostDto);
 

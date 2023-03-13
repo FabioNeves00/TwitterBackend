@@ -1,7 +1,7 @@
 import {
-  Body,
-  Controller, Post,
-  Put, Res
+    Body,
+    Controller, Post,
+    Put, Res
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
