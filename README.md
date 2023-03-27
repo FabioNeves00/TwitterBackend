@@ -22,9 +22,30 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+
+## Table of contents
+| Sections |
+|:-:|
+| [Dependencies](#dependencies) |
+| [Diagrams](#diagrams) |
+| [Installation](#installation) |
+| [Run without docker](#without-docker) |
+| [Run with docker](#with-docker) |
+
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Twitter backend clone made with Nestjs, Typescript, PostgreSQL, TypeORM and JWT
+
+## Dependencies
+
+- [NodeJs v19.7.0](https://nodejs.org/en/download)
+- [NestJs](https://docs.nestjs.com/)
+- [PostgreSQL v14.16](https://www.postgresql.org/download/)
+- [Docker](https://docs.docker.com/desktop/)
+
+## Diagrams
+
+[TO BE DONE]
 
 ## Installation
 
@@ -33,7 +54,20 @@ $ npm install
 ```
 
 ## Running the app
+### Without docker
+#### Database
+##### Obs: Install PostgreSQL from the [website](#Dependencies)
+```bash
+# enter postgres terminal
+$ sudo su -u postgres psql
 
+# create database
+$ CREATE DATABASE twitter;
+
+# exit
+$ \q
+```
+#### API
 ```bash
 # development
 $ npm run start
@@ -45,28 +79,12 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+### With docker
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# build the api and database images, run and detach from terminal
+$ sudo docker compose build && sudo docker compose up -d
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
