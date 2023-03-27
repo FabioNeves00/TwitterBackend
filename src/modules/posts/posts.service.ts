@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { User } from '../users/entities/user.entity';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post } from './entities/post.entity';
 
@@ -11,14 +12,18 @@ export class PostsService {
     private readonly postRepo: Repository<Post>,
   ) {}
 
-  async create(createPostDto: CreatePostDto) {
-    const newPost = this.postRepo.create(createPostDto);
+  async create(createPostDto: CreatePostDto, userId: string) {
+    const newPost = this.postRepo.create({
+      ...createPostDto,
+      author: userId as unknown as User,
+    });
 
     return await this.postRepo.save(newPost);
   }
 
   async findAll() {
     return await this.postRepo.find({
+      relations: ['author'],
       select: {
         author: {
           id: true,
@@ -30,6 +35,7 @@ export class PostsService {
 
   async findUserPosts(id: string) {
     return await this.postRepo.find({
+      relations: ['author'],
       where: {
         author: {
           id,
@@ -45,9 +51,5 @@ export class PostsService {
         },
       },
     });
-  }
-
-  async remove(id: string) {
-    return `This action removes a #${id} post`;
   }
 }

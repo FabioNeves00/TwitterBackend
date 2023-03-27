@@ -13,6 +13,7 @@ export class UsersService {
   findAll() {
     return this.userRepo.find({
       relations: ['posts'],
+      select: ['email', 'posts', 'username', 'created_at']
     });
   }
 
@@ -22,6 +23,7 @@ export class UsersService {
         id,
       },
       relations: ['posts'],
+      select: ['email', 'posts', 'username', 'created_at']
     });
   }
 }

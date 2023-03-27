@@ -8,6 +8,8 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AuthModule } from './modules/auth/auth.module';
+import { PostsModule } from './modules/posts/posts.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import { AuthModule } from './modules/auth/auth.module';
     ),
     HttpModule.register(configurationService.getHttpModuleConfig()),
     JwtModule.register({}),
-    AuthModule
+    AuthModule,
+    UsersModule,
+    PostsModule
   ],
   controllers: [AppController],
   providers: [
