@@ -39,7 +39,7 @@ Twitter backend clone made with Nestjs, Typescript, PostgreSQL, TypeORM and JWT
 ## Dependencies
 
 - [NodeJs v19.7.0](https://nodejs.org/en/download)
-- [NestJs](https://docs.nestjs.com/)
+
 - [PostgreSQL v14.16](https://www.postgresql.org/download/)
 - [Docker](https://docs.docker.com/desktop/)
 
@@ -50,7 +50,17 @@ Twitter backend clone made with Nestjs, Typescript, PostgreSQL, TypeORM and JWT
 ## Installation
 
 ```bash
+# clone the api source code
+$ git clone https://github.com/FabioNeves00/TwitterBackend twitter-backend
+
+# change directory to files
+$ cd twitter-backend
+
+# install deps
 $ npm install
+
+# install nestjs cli to run api locally
+$ npm install -g @nestjs/cli
 ```
 
 ## Running the app
