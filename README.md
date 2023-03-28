@@ -49,7 +49,7 @@ Twitter backend clone made with Nestjs, Typescript, PostgreSQL, TypeORM and JWT
 ![image](https://user-images.githubusercontent.com/67487494/228229263-9ae8dd63-7b00-41be-8b27-a32a3d931c9e.png)
 
 
-### Casos de Uso:
+### Use cases:
 ![image](https://user-images.githubusercontent.com/67487494/228230016-bb46176d-a9a5-4f51-be52-4e0189341537.png)
 
 
